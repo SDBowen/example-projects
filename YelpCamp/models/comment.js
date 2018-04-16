@@ -1,5 +1,3 @@
-//import { mongo } from "mongoose";
-
 var mongoose = require("mongoose");
 
 var commentSchema = mongoose.Schema({
