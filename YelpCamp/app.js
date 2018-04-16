@@ -14,6 +14,14 @@ var commentRoutes = require('./routes/comments'),
   campgroundRoutes = require('./routes/campgrounds');
   indexRoutes = require('./routes/index');
 
+mongoose.connect('mongodb://localhost/yelp_camp');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
+
+// Seed database
+//seedDB();
+
 // Configure Passport
 app.use(
   require('express-session')({
@@ -27,12 +35,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-mongoose.connect('mongodb://localhost/yelp_camp');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
-seedDB();
 
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
