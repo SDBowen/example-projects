@@ -1,3 +1,5 @@
+require('dotenv/config');
+
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
@@ -16,8 +18,7 @@ var commentRoutes = require('./routes/comments'),
   campgroundRoutes = require('./routes/campgrounds');
   indexRoutes = require('./routes/index');
 
-//mongoose.connect('mongodb://localhost/yelp_camp');
-mongoose.connect('mongodb://YCprod:YCprod@ds161459.mlab.com:61459/yelpcamp-sdb');
+mongoose.connect(process.env.DATABASE_URL);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -52,7 +53,6 @@ app.use('/', indexRoutes);
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+app.listen(process.env.PORT || 3000, process.env.IP, function(){
   console.log("YelpCamp server has started!");
 })
