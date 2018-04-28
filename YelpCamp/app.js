@@ -52,6 +52,7 @@ app.use('/', indexRoutes);
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 
-app.listen(3000, 'localhost', function() {
-  console.log('The YelpCamp server has started!');
-});
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  console.log("YelpCamp server has started!");
+})
