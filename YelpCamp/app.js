@@ -7,18 +7,19 @@ var express = require('express'),
   flash = require('connect-flash'),
   passport = require('passport'),
   LocalStrategy = require('passport-local'),
-  methodOverride = require('method-override')
+  methodOverride = require('method-override'),
   Campground = require('./models/campground'),
   Comment = require('./models/comment'),
-  User = require ('./models/user'),
+  User = require('./models/user'),
   seedDB = require('./seeds');
 
 // Require routes
 var commentRoutes = require('./routes/comments'),
-  campgroundRoutes = require('./routes/campgrounds');
+  campgroundRoutes = require('./routes/campgrounds'),
   indexRoutes = require('./routes/index');
 
-mongoose.connect(process.env.DATABASE_URL);
+var url = process.env.DATABASE_URL || 'mongodb://localhost/yelp_camp';
+mongoose.connect(url);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -45,7 +46,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
   res.locals.error = req.flash('error');
-  res.locals.success = req.flash('success')  
+  res.locals.success = req.flash('success');
   next();
 });
 
@@ -53,6 +54,6 @@ app.use('/', indexRoutes);
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 
-app.listen(process.env.PORT || 3000, process.env.IP, function(){
-  console.log("YelpCamp server has started!");
-})
+app.listen(process.env.PORT || 3000, process.env.IP, function() {
+  console.log('YelpCamp server has started!');
+});
