@@ -20,7 +20,7 @@ function loadEventListeners() {
   // Filter tasks event
   filter.addEventListener('keyup', filterTasks);
 }
-
+// Load tasks from local storage
 function getTasks() {
   let tasks;
 
@@ -50,6 +50,7 @@ function getTasks() {
   });
 }
 
+// Add task to LI
 function addTask(e) {
   if (taskInput.value === '') {
     alert('Add a Task');
