@@ -1,1 +1,0 @@
-A walkthrough of Ajax calls and callbacks from the 'Custom HTTP Library' lectures in Brad Traversy's Udemy course, 'Modern JavaScript From The Beginning'.
