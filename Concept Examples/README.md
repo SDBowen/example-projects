@@ -1,0 +1,1 @@
+Small code examples to practice various JS concepts. 

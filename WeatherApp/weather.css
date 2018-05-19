@@ -1,0 +1,80 @@
+body {
+	background-color: gray;
+	background-size: cover;
+	font-family: 'Fjalla One', sans-serif;
+
+}
+
+div {
+	text-align: center;
+
+}
+
+h1 {
+	margin-bottom: 0;
+}
+
+h5 {
+	margin-top: 5px;
+}
+
+#icon {
+	display: inline-block;
+	height: 50px;
+	width: 50px;
+}
+
+table {
+	margin: 0 auto;
+}
+
+#temp {
+	color: blue;
+}
+
+.clear{
+	background-image: url("assets/clear.jpg");
+}
+
+.clouds{
+	background-image: url("assets/clouds.jpg");
+}
+
+.snow{
+	background-image: url("assets/snow.jpg");
+}
+
+.rain{
+	background-image: url("assets/rain.jpg");
+}
+
+.drizzle{
+	background-image: url("assets/drizzle.jpg");
+}
+
+.storm{
+	background-image: url("assets/storm.jpg");
+}
+.clearIcon{
+	background: url("assets/clear.png");
+}
+
+.cloudsIcon{
+	background: url("assets/clouds.png");
+}
+
+.snowIcon{
+	background: url("assets/snow.png");
+}
+
+.rainIcon{
+	background: url("assets/rain.png");
+}
+
+.drizzleIcon{
+	background: url("assets/drizzle.png");
+}
+
+.stormIcon{
+	background: url("assets/storm.png");
+}

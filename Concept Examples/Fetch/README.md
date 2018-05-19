@@ -1,1 +1,0 @@
-A walkthrough of Fetch calls and ES6 syntax from Brad Traversy's Udemy course, 'Modern JavaScript From The Beginning'.

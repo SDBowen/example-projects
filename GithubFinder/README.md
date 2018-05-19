@@ -1,0 +1,1 @@
+App that allows searching of GitHub users by profile name. Practice  with Async/Await, fetch API calls, and ES6 classes.
