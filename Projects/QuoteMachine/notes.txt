@@ -1,3 +1,0 @@
---Add backup quotes if quote server is down
---Fix twitter button
---Fix lag in quote fading/reappear
