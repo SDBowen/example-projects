@@ -1,0 +1,6 @@
+YelpCamp/.env
+.vscode/settings.json
+GithubFinder/key.js
+app.js
+index.html
+YelpCamp/node_modules/passport-local-mongoose/.vscode/launch.json
