@@ -13,7 +13,7 @@ User.prototype = {
 };
 
 const Chatroom = function() {
-  let users = {};
+  let users = {}
 
   return {
     register: function(user) {
