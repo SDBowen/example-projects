@@ -1,12 +1,11 @@
 #! python3
-import pyautogui, sys
-print('Press Ctrl-C to quit.')
+import pyautogui
 
-try:
-    while True:
-        x, y = pyautogui.position()
-        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
-        print(positionStr, end='')
-        print('\b' * len(positionStr), end='', flush=True)
-except KeyboardInterrupt:
-    print('\n')
+distance = 200
+while distance > 0:
+    pyautogui.dragRel(distance, 0, duration=0.5)   # move right
+    distance -= 5
+    pyautogui.dragRel(0, distance, duration=0.5)   # move down
+    pyautogui.dragRel(-distance, 0, duration=0.5)  # move left
+    distance -= 5
+    pyautogui.dragRel(0, -distance, duration=0.5)  # move up
