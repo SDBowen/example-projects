@@ -194,7 +194,18 @@ const App = (function (ItemCtrl, UICtrl) {
 
         // Edit item click event
         document.querySelector(UISelectors.itemList).addEventListener('click', itemEditClick);
+
+        // Update item event
+        document.querySelector(UISelectors.updateBtn).addEventListener('click', itemUpdateSubmit);
     }
+
+    // Disable submit on enter
+    document.addEventListener('keypress', function (e) {
+        if (e.keyCode === 13 || e.which === 13) {
+            e.preventDefault();
+            return false
+        }
+    });
 
     // Add item submit
     const itemAddSubmit = function (e) {
@@ -243,6 +254,12 @@ const App = (function (ItemCtrl, UICtrl) {
             // Add item to form
             UICtrl.addItemToForm();
         };
+        e.preventDefault();
+    }
+
+    // Update item submit
+    const itemUpdateSubmit = function (e) {
+        console.log('update this')
         e.preventDefault();
     }
 
