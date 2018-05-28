@@ -84,6 +84,10 @@ const ItemCtrl = (function () {
             data.items.splice(index, 1);
         },
 
+        clearAllItems: function () {
+            data.items = [];
+        },
+
         setCurrentItem: function (item) {
             data.currentItem = item;
         },
@@ -120,6 +124,7 @@ const UICtrl = (function () {
         updateBtn: '.update-btn',
         backBtn: '.back-btn',
         deleteBtn: '.delete-btn',
+        clearBtn: '.clear-btn',
         itemNameInput: '#item-name',
         itemCaloriesInput: '#item-calories',
         totalCalories: '.total-calories'
@@ -211,6 +216,17 @@ const UICtrl = (function () {
             UICtrl.showEditState();
         },
 
+        removeItems: function () {
+            let listItems = document.querySelectorAll(UISelectors.listItems);
+
+            // Turn node list into array
+            listItems = Array.from(listItems);
+
+            listItems.forEach(function (item) {
+                item.remove();
+            })
+        },
+
         hideList: function () {
             document.querySelector(UISelectors.itemList).style.display = 'none';
         },
@@ -261,7 +277,10 @@ const App = (function (ItemCtrl, UICtrl) {
 
         // Delete item event
         document.querySelector(UISelectors.deleteBtn).addEventListener('click', itemDeleteSubmit);
-    }
+
+        // Clear items event
+        document.querySelector(UISelectors.clearBtn).addEventListener('click', clearAllItemsClick);
+}
 
     // Disable submit on enter
     document.addEventListener('keypress', function (e) {
@@ -363,6 +382,24 @@ const App = (function (ItemCtrl, UICtrl) {
         UICtrl.clearEditState();
         
         e.preventDefault();
+    };
+
+    // Clear items event
+    const clearAllItemsClick = function () {
+        // Delete all items from data
+        ItemCtrl.clearAllItems();
+
+        // Get total calories
+        const totalCalories = ItemCtrl.getTotalCalories();
+
+        // Add total calories to UI
+        UICtrl.showTotalCalories(totalCalories);
+
+        // Remove from UI
+        UICtrl.removeItems();
+
+        // Hide list
+        UICtrl.hideList();
     };
 
     return {
