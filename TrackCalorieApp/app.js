@@ -71,6 +71,19 @@ const ItemCtrl = (function () {
             return found;
         },
 
+        deleteItem: function (id) {
+            // Get ids
+            const ids = data.items.map(function(item) {
+                return item.id;
+            });
+
+            // Get item index
+            const index = ids.indexOf(id);
+
+            // Remove item
+            data.items.splice(index, 1);
+        },
+
         setCurrentItem: function (item) {
             data.currentItem = item;
         },
@@ -180,6 +193,13 @@ const UICtrl = (function () {
             });
         },
 
+        deleteListItem: function(id) {
+            const itemId = `#item-${id}`;
+            const item = document.querySelector(itemId);
+
+            item.remove();
+        },
+
         clearInput: function () {
             document.querySelector(UISelectors.itemNameInput).value = '';
             document.querySelector(UISelectors.itemCaloriesInput).value = '';
@@ -238,6 +258,9 @@ const App = (function (ItemCtrl, UICtrl) {
     
         // Back button event
         document.querySelector(UISelectors.backBtn).addEventListener('click', UICtrl.clearEditState);
+
+        // Delete item event
+        document.querySelector(UISelectors.deleteBtn).addEventListener('click', itemDeleteSubmit);
     }
 
     // Disable submit on enter
@@ -319,6 +342,28 @@ const App = (function (ItemCtrl, UICtrl) {
 
         e.preventDefault();
     }
+
+    // Delete button event
+    const itemDeleteSubmit = function(e) {
+        // Get current item
+        const currentItem = ItemCtrl.getCurrentItem();
+
+        // Delete item from data
+        ItemCtrl.deleteItem(currentItem.id);
+
+        // Delete from UI
+        UICtrl.deleteListItem(currentItem.id);
+
+        // Get total calories
+        const totalCalories = ItemCtrl.getTotalCalories();
+
+        // Add total calories to UI
+        UICtrl.showTotalCalories(totalCalories);
+
+        UICtrl.clearEditState();
+        
+        e.preventDefault();
+    };
 
     return {
         init: function () {
