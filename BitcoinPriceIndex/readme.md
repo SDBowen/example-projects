@@ -1,0 +1,1 @@
+AJAX example retreiving the current Bitcoin price from Coinbase's API.
