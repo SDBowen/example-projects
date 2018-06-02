@@ -1,15 +1,21 @@
-let XHR = new XMLHttpRequest();
+let btn = document.querySelector('#getDog');
+let img = document.querySelector('#photo');
 
-XHR.onreadystatechange = function () {
-  console.log(`Ready state is... ${XHR.readyState}`);
-  if (XHR.readyState == 4) {
-    if (XHR.status == 200)
-      console.log(XHR.responseText);
-  } else {
-    console.log('A problem occured!')
+btn.addEventListener('click', function () {
+  let XHR = new XMLHttpRequest();
+  XHR.open('GET', 'https://dog.ceo/api/breeds/image/random')
+  XHR.send()
+
+  XHR.onreadystatechange = function () {
+    if (XHR.readyState == 4 && XHR.status == 200) {
+      let data = JSON.parse(XHR.responseText).message;
+
+      img.src = data;
+    }
   }
-}
+});
 
 
-XHR.open('GET', 'http://api.github.com/zen')
-XHR.send()
+
+
+
