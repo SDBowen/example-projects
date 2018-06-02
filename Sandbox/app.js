@@ -1,15 +1,15 @@
-function countDown(seconds) {
-  let remainingTime = seconds;  
-  const intervalId = setInterval(() => {
+let XHR = new XMLHttpRequest();
 
-    if (remainingTime > 1) {
-      remainingTime -= 1;
-      console.log(`Remaining: ${remainingTime}`)
-    } else {
-      console.log('Ring Ring Ring');
-      clearInterval(intervalId)
-    }
-  }, 1000)
-};
+XHR.onreadystatechange = function () {
+  console.log(`Ready state is... ${XHR.readyState}`);
+  if (XHR.readyState == 4) {
+    if (XHR.status == 200)
+      console.log(XHR.responseText);
+  } else {
+    console.log('A problem occured!')
+  }
+}
 
-countDown(3);
+
+XHR.open('GET', 'http://api.github.com/zen')
+XHR.send()
