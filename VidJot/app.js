@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -21,6 +22,9 @@ const Idea = mongoose.model('idea');
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Method override middleware
+app.use(methodOverride('_method'));
 
 // Handlebars middleware
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
@@ -53,6 +57,15 @@ app.get('/ideas/add', (req, res) => {
   res.render('ideas/add');
 });
 
+// Edit idea form
+app.get('/ideas/edit/:id', (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  }).then(idea => {
+    res.render('ideas/edit', { idea });
+  });
+});
+
 // Process form
 app.post('/ideas', (req, res) => {
   const errors = [];
@@ -80,6 +93,26 @@ app.post('/ideas', (req, res) => {
       res.redirect('/ideas');
     });
   }
+});
+
+// Edit form process
+app.put('/ideas/:id', (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  }).then(idea => {
+    // New values
+    idea.title = req.body.title;
+    idea.details = req.body.details;
+
+    idea.save().then(idea => {
+      res.redirect('/ideas');
+    });
+  });
+});
+
+// Delete Idea
+app.delete('/ideas/:id', (req, res) => {
+  Idea.remove({ _id: req.params.id }).then(() => res.redirect('/ideas'));
 });
 
 const port = 5000;
