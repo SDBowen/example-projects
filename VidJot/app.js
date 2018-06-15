@@ -6,12 +6,16 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const app = express();
 
 // Load routes
 const ideas = require('./routes/ideas');
 const users = require('./routes/users');
+
+// Passport config
+require('./config/passport')(passport);
 
 // Map global promise - get rid of consol warning
 mongoose.Promise = global.Promise;
