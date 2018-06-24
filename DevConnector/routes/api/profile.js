@@ -8,6 +8,8 @@ const router = express.Router();
 const Profile = require('../../models/Profile');
 // Load user model
 const User = require('../../models/User');
+// Load validation
+const validatorProfileInput = require('../../validation/profile');
 
 // @Route   GET api/profile/test
 // @Desc    Test profile route
@@ -24,6 +26,7 @@ router.get(
     const errors = {};
 
     Profile.findOne({ user: req.user.id })
+      .populate('user', ['name', 'avatar'])
       .then(profile => {
         if (!profile) {
           errors.noprofile = 'There is no profile for this user';
@@ -42,6 +45,13 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    const { errors, isValid } = validatorProfileInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
@@ -57,7 +67,7 @@ router.post(
 
     // Skills - Split into array
     if (typeof req.body.skills !== 'undefined') {
-      profileFields.skills = req.body.skills.spliy(',');
+      profileFields.skills = req.body.skills.split(',');
     }
 
     // Social
@@ -72,7 +82,7 @@ router.post(
       if (profile) {
         // Update
         Profile.findOneAndUpdate(
-          { usre: req.user.id },
+          { user: req.user.id },
           { $set: profileFields },
           { new: true }
         ).then(profile => res.json(profile));
@@ -87,7 +97,7 @@ router.post(
           }
 
           // Save profile
-          new Profile(profileFields.save().then(profile => res.json(profile)));
+          new Profile(profileFields).save().then(profile => res.json(profile));
         });
       }
     });
