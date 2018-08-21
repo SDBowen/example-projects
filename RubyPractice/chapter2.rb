@@ -71,19 +71,99 @@
 # puts "string_1's id is #{string_1.object_id}."
 # puts "string_2's id is #{string_2.object_id}."
 
-str = 'Hello'
-abc = str
-str.replace('Goodbye')
-puts str
-puts abc
+# str = 'Hello'
+# abc = str
+# str.replace('Goodbye')
+# puts str
+# puts abc
 
-def say_goodbye
-  str = 'Hello'
-  abc = str
-  str.replace('Goodbye')
-  puts str
-  puts abc
+# def say_goodbye
+#   str = 'Hello'
+#   abc = str
+#   str.replace('Goodbye')
+#   puts str
+#   puts abc
+# end
+
+# say_goodbye
+
+# class Ticket
+#   def event
+#     "Can't really be specified yet..."
+#   end
+#     end
+
+# ticket = Ticket.new
+# puts ticket.event
+
+# class Person
+#   def set_name(string)
+#     puts "Setting person's name..."
+#     @name = string
+#   end
+
+#   def get_name
+#     puts "Returning the person's name..."
+#     @name
+#   end
+#     end
+# joe = Person.new
+# joe.set_name('Joe')
+# puts joe.get_name
+
+# class Ticket
+#     def initialize(venue,date)
+#     @venue = venue
+#     @date = date
+#     end
+
+#     def venue
+#         @venue
+#     end
+#     def date
+#         @date
+#     end
+# end
+
+# th = Ticket.new("Town Hall", "11/12/13")
+# cc = Ticket.new("Convention Center", "12/13/14")
+# puts "We've created two tickets."
+# puts "The first is for a #{th.venue} event on #{th.date}."
+# puts "The second is for an event on #{cc.date} at #{cc.venue}."
+
+class Ticket
+  def initialize(venue)
+    @venue = venue
+  end
+
+  attr_reader :price
+  attr_reader :venue
+
+  def date=(date)
+    month, day, year = date.split('/')
+    if year.to_i > 100 || 0
+      puts 'Please submit the date in the format ‘mm/dd/yy’.'
+    else
+      @date = date
+    end
+  end
+
+  def set_price(amount)
+    @price = amount
+  end
+
+  def discount(percent)
+    @price = @price * (100 - percent) / 100.0
+  end
 end
 
-say_goodbye
+# th = Ticket.new('Town Hall')
+# th.date = '01/12/99'
+# th.set_price(100.00)
+# puts "The ticket costs $#{format('%.2f', th.price)}."
+# puts "The ticket for #{th.venue} has been discounted to 15% to #{th.discount(15)}."
 
+ticket = Ticket.new('Town Hall')
+# ticket.date = '11/12/13'
+# ticket.date = '11/12/1913'
+ticket.date = 'pizza'
