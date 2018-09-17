@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <div>Random Count: <span id="count"></span></div>
+  <script>
+    const counterNode = document.getElementById('count');
+
+    const createStore = (reducer, initialState) => {
+      const store = {};
+      store.state = initialState;
+      store.listeners = [];
+      store.getState = () => store.state;
+      store.subscribe = listener => {
+        store.listeners.push(listener);
+      };
+      store.dispatch = action => {
+        console.log('> Action', action);
+        store.state = reducer(store.state, action);
+        store.listeners.forEach(listener => listener());
+      };
+      return store;
+    };
+
+    const getInitialState = () => {
+      return {
+        count: 0,
+      };
+    };
+
+    const reducer = (state = getInitialState(), action) => {
+      switch (action.type) {
+        case 'COUNT':
+          const nextState = {
+            count: state.count + action.payload.count,
+          };
+          return nextState;
+        default:
+          return state;
+      }
+
+    };
+    const store = createStore(reducer);
+    store.subscribe(() => {
+      const state = store.getState();
+      const count = state.count;
+      counterNode.innerHTML = count;
+    });
+
+    // A simple event to dispatch changes
+    document.addEventListener('click', () => {
+      console.log('----- Previous state', store.getState());
+      store.dispatch({
+        type: 'COUNT',
+        payload: {
+          count: Math.ceil(Math.random() * 10),
+        },
+      });
+
+      console.log('+++++ New state', store.getState());
+
+    });
+
+    store.dispatch({}); // Sets the inital state
+
+  </script>
+</body>
+
+</html>
