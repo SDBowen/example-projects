@@ -3,12 +3,8 @@ function tribonacci(signature, n) {
     return signature.slice(0, n);
   } else {
     for (let i = 0; i < n - 3; i++) {
-      let lastThreeNums = signature.slice(-3);
-
-      let sum = lastThreeNums.reduce((a, b) => a + b);
-      signature.push(sum);
+      signature.push(signature.slice(-3).reduce((a, b) => a + b));
     }
-
     return signature;
   }
 }
