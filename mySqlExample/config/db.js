@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
@@ -9,13 +8,15 @@ const db = mysql.createConnection({
   database: process.env.MYSQL_DATABASE
 });
 
-db.connect(err => {
-  if (err) {
-    console.error(`error connecting: ${err.stack}`);
-    return;
-  }
+const connect = () => {
+  db.connect(err => {
+    if (err) {
+      console.error(`error connecting: ${err.stack}`);
+      process.exit(1);
+    }
 
-  console.log(`connected as id ${db.threadId}`);
-});
+    console.log(`connected as id ${db.threadId}`);
+  });
+};
 
-module.exports = db;
+module.exports = { db, connect };

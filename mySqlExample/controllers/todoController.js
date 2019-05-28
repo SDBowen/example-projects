@@ -1,4 +1,4 @@
-const Task = require('../models/task');
+const Task = require('../models/Task');
 
 exports.getAllTasks = (req, res) => {
   Task.getAll((err, task) => {
@@ -37,6 +37,7 @@ exports.updateTask = (req, res) => {
 };
 
 exports.deleteTask = (req, res) => {
+  // eslint-disable-next-line no-unused-vars
   Task.remove(req.params.taskId, (err, task) => {
     if (err) res.send(err);
     res.json({ message: 'Task successfully deleted' });

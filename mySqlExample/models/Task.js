@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 
-const db = require('../db.js');
+const db = require('../config/db.js');
 
 const Task = task => {
   this.task = task.task;
   this.status = task.status;
+  this.updated_at = new Date();
   this.created_at = new Date();
 };
 
