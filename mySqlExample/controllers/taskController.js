@@ -10,7 +10,7 @@ exports.getAllTasks = (req, res) => {
 exports.createTask = (req, res) => {
   const newTask = new Task(req.body);
 
-  if (!newTask.task || !newTask.status) {
+  if (!newTask.description) {
     res
       .status(400)
       .send({ error: true, message: 'Please provide task/status' });

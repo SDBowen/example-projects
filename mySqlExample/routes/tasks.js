@@ -1,4 +1,4 @@
-const todo = require('../controllers/todoController');
+const todo = require('../controllers/taskController');
 
 const taskRoute = app => {
   app
