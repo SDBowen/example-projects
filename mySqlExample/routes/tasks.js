@@ -1,16 +1,11 @@
-const todo = require('../controllers/taskController');
+const router = require('express').Router();
+const taskController = require('../controllers/taskController');
 
-const taskRoute = app => {
-  app
-    .route('/tasks')
-    .get(todo.getAllTasks)
-    .post(todo.createTask);
+router.get('/', taskController.getAllTasks);
+router.post('/', taskController.createTask);
 
-  app
-    .route('/tasks/:taskId')
-    .get(todo.getTask)
-    .put(todo.updateTask)
-    .delete(todo.deleteTask);
-};
+router.get('/:taskId', taskController.getTask);
+router.put('/:taskId', taskController.updateTask);
+router.delete('/:taskId', taskController.deleteTask);
 
-module.exports = taskRoute;
+module.exports = router;

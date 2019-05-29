@@ -1,16 +1,11 @@
-const todo = require('../controllers/projectController');
+const router = require('express').Router();
+const projectController = require('../controllers/projectController');
 
-const projectRoute = app => {
-  app
-    .route('/projects')
-    .get(todo.getAllProjects)
-    .post(todo.createProject);
+router.get('/', projectController.getAllProjects);
+router.post('/', projectController.createProject);
 
-  app
-    .route('/projects/:projectId')
-    .get(todo.getProject)
-    .put(todo.updateProject)
-    .delete(todo.deleteProject);
-};
+router.get('/:projectId', projectController.getProject);
+router.put('/:projectId', projectController.updateProject);
+router.delete('/:projectId', projectController.deleteProject);
 
-module.exports = projectRoute;
+module.exports = router;
