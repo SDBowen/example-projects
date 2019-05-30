@@ -1,48 +1,53 @@
 const Project = require('../models/Project');
+const { db } = require('../config/db.js');
 
 exports.getAllProjects = (req, res) => {
-  Project.getAll((err, project) => {
+  db.query(Project.getAll(), (err, project) => {
     if (err) res.send(err);
     res.send(project);
   });
 };
 
 exports.createProject = (req, res) => {
-  const newProject = new Project(req.body);
+  const project = new Project(req.body.name);
+  project.created_at = new Date();
 
-  if (!newProject.name) {
+  if (!project.name) {
     res
       .status(400)
       .send({ error: true, message: 'Please provide project name' });
   } else {
-    Project.create(newProject, (err, project) => {
+    db.query(Project.create(), project, (err, dbResponse) => {
       if (err) res.send(err);
-      res.json(project);
+      res.json(dbResponse);
     });
   }
 };
 
 exports.getProject = (req, res) => {
-  Project.getById(req.params.projectId, (err, project) => {
+  const { id } = req.params;
+
+  db.query(Project.getById(), id, (err, dbResponse) => {
     if (err) res.send(err);
-    res.json(project);
+    res.json(dbResponse);
   });
 };
 
 exports.updateProject = (req, res) => {
-  Project.updateById(
-    req.params.projectId,
-    new Project(req.body),
-    (err, project) => {
-      if (err) res.send(err);
-      res.json(project);
-    }
-  );
+  const { id } = req.params;
+  const project = new Project(req.body.name);
+  const data = [project, id];
+
+  db.query(Project.updateById(), data, (err, dbResponse) => {
+    if (err) res.send(err);
+    res.json(dbResponse);
+  });
 };
 
 exports.deleteProject = (req, res) => {
-  // eslint-disable-next-line no-unused-vars
-  Project.remove(req.params.projectId, (err, project) => {
+  const { id } = req.params;
+
+  db.query(Project.remove(), id, err => {
     if (err) res.send(err);
     res.json({ message: 'Project successfully deleted' });
   });
