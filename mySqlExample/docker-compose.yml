@@ -7,7 +7,7 @@ services:
     volumes:
       - ./tmp/db:/var/lib/mariadb/
     environment:
-      MYSQL_DATABASE: mystudioloDev
+      MYSQL_DATABASE: todoDev
       MYSQL_ROOT_PASSWORD: development
     ports:
       - '3306:3306'
