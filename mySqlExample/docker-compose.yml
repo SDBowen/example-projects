@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  db:
+    container_name: mariadb_dev
+    image: mariadb
+    restart: always
+    volumes:
+      - ./tmp/db:/var/lib/mariadb/
+    environment:
+      MYSQL_DATABASE: mystudioloDev
+      MYSQL_ROOT_PASSWORD: development
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    networks:
+      - dev
+  api:
+    container_name: node_api
+    image: node:10-alpine
+    volumes:
+      - ./:/app
+    working_dir: /app
+    depends_on:
+      - db
+    ports:
+      - '5000:5000'
+    networks:
+      - dev
+    command: sh -c 'bin/wait-for db:3306 -- npm run dev'
+networks:
+  dev:
+    driver: bridge
